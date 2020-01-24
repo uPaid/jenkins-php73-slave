@@ -12,6 +12,7 @@ RUN rm /etc/apt/preferences.d/no-debian-php && apt-get update && apt-get install
   libmcrypt-dev \
   libpng-dev \
   libicu-dev \
+  libgpgme11-dev \
   sqlite3 \
   libsqlite3-dev \
   libxml2-dev \
@@ -20,6 +21,7 @@ RUN rm /etc/apt/preferences.d/no-debian-php && apt-get update && apt-get install
   php-soap \
   && pecl install xdebug-2.7.1 \
   && pecl install mcrypt-1.0.2 \
+  && pecl install gnupg \
   && docker-php-ext-enable mcrypt \
   && docker-php-ext-enable xdebug \
   && docker-php-ext-install -j$(nproc) iconv \
@@ -42,8 +44,8 @@ ENV JAVA_OPTS -Dfile.encoding=UTF-8 \
 
 COPY php.ini /usr/local/etc/php/
 
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
-  && apt-get install -y nodejs npm \
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+  && apt-get install -y nodejs \
   && apt-get install -y build-essential \
   && npm i -g npm@latest \
   && npm install -g npm yarn gulp-cli browserify @angular/cli
